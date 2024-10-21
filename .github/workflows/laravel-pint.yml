@@ -31,5 +31,5 @@ jobs:
           git config user.name "gh-actions"
           git config user.email "gh@example.com"
           git add .
-          git commit -m 'Laravel pint'
+          git commit -m 'Laravel pint' || exit 0
           git push
