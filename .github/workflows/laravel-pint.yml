@@ -19,6 +19,7 @@ jobs:
         uses: ./.github/actions/setup
         with:
           php-version: '8.3'
+          php-extensions: json, dom, curl, libxml, mbstring
 
       - name: Install Laravel pint
         run: composer global require laravel/pint
