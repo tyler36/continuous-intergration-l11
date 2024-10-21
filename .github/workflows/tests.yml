@@ -19,6 +19,11 @@ jobs:
           MYSQL_DATABASE: laravel
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
 
+    env:
+      PHP_VERSION: '8.3'
+      PHP_EXTENSIONS: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, igbinary, msgpack, lzf, zstd, lz4, memcached, gmp
+      PHP_CACHE_KEY: extension-cache-v1
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -27,9 +32,9 @@ jobs:
         id: extcache
         uses: shivammathur/cache-extensions@v1
         with:
-          php-version: '8.3'
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, igbinary, msgpack, lzf, zstd, lz4, memcached, gmp
-          key: extension-cache-v1
+          php-version: ${{ env.PHP_EXTENSIONS }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          key: ${{ env.PHP_CACHE_KEY }}
 
       - name: Cache extensions
         uses: actions/cache@v4
@@ -42,9 +47,9 @@ jobs:
         id: setup-php
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: ${{ env.PHP_EXTENSIONS }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
           tools: composer:v2
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, igbinary, msgpack, lzf, zstd, lz4, memcached, gmp
 
       - name: Get composer cache dir
         id: composer-cache-dir
